@@ -1,4 +1,4 @@
-package com.example.myplayer.ui
+package com.example.myplayer.ui.main.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
