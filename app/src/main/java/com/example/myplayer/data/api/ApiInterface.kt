@@ -1,6 +1,7 @@
 package com.example.myplayer.data.api
 
 import android.util.Log
+import com.example.myplayer.data.model.VideoListResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -15,7 +16,7 @@ interface ApiInterface {
 
     @GET("search?key=AIzaSyACzpdR-lIiVBEJ-paUfMZsQV4zlcda4R4&channelId=UCAptZHV2-xkB4GJGgSKRsHQ&part=snippet,id&order=date&maxResults=50")
     fun getVideoResult()
-            :Response<VideoListResults>
+            :Response<VideoListResponse>
 
     companion object Factory {
         fun create(): ApiInterface {
