@@ -12,6 +12,7 @@ import com.example.myplayer.R
 import com.example.myplayer.data.api.ApiInterface
 import com.example.myplayer.data.model.Item
 import com.example.myplayer.ui.main.adapter.VideoListAdapter
+import com.example.myplayer.ui.main.view.VideoPlayFragment.Companion.EXTRA_ITEM
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_first.*
@@ -36,7 +37,6 @@ class FirstFragment : Fragment() {
                         layoutManager = LinearLayoutManager(activity)
                         adapter = it.body()?.items?.let { it1 -> VideoListAdapter(it1,::openFragment) }
                     }
-
                 }, {
                     it.printStackTrace()
                 }
@@ -44,7 +44,10 @@ class FirstFragment : Fragment() {
     }
 
     fun openFragment(item: Item){
-        findNavController().navigate(R.id.action_firstFragment_to_videoPlayFragment)
+        findNavController().navigate(R.id.action_firstFragment_to_videoPlayFragment,Bundle().run {
+            this.putParcelable(EXTRA_ITEM ,  item.id)
+            this
+        })
     }
 
 }
