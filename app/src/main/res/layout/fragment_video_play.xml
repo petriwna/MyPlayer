@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        app:use_controller = "false"
+        app:use_controller = "true"
         app:show_timeout = "10000"
         app:repeat_toggle_modes ="one"
         app:fastforward_increment ="30000"

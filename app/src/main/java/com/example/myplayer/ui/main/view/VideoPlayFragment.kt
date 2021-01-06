@@ -21,30 +21,28 @@ import kotlinx.android.synthetic.main.fragment_video_play.*
 
 class VideoPlayFragment : Fragment() {
 
+    lateinit var videoPlayer: SimpleExoPlayer
+
     companion object {
         const val EXTRA_ITEM = "EXTRA_URL"
-        fun newInstance(id: Id) = VideoPlayFragment().let { fragment ->
+        fun newInstance(id: Id ) = VideoPlayFragment().let { fragment ->
             Bundle().let {
-                it.putParcelable(EXTRA_ITEM, id)
+                it.putParcelable(EXTRA_ITEM , id)
                 fragment.arguments = it
             }
         }
     }
 
     private fun playVideo(videoUrl: String?) {
-
-        var videoPlayer = SimpleExoPlayer.Builder(requireContext()).build()
-        videoPlayer.playWhenReady = true
+        videoPlayer = SimpleExoPlayer.Builder(requireContext()).build()
         player_view?.player = videoPlayer
         videoUrl?.let {
             buildMediaSource(it)?.let {
-                videoPlayer?.prepare(it)
-
+                videoPlayer.prepare(it)
             }
         }
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,9 +65,19 @@ class VideoPlayFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_video_play, container, false)
     }
 
-    private fun buildMediaSource(link: String): MediaSource? {
+    private fun buildMediaSource(link:String): MediaSource? {
         val dataSourceFactory = DefaultDataSourceFactory(requireContext(), "sample")
         return ProgressiveMediaSource.Factory(dataSourceFactory)
             .createMediaSource(Uri.parse(link))
+    }
+
+    override fun onStop() {
+        releasePlayer()
+        super.onStop()
+    }
+
+     fun releasePlayer() {
+        videoPlayer.stop()
+        videoPlayer.release()
     }
 }
